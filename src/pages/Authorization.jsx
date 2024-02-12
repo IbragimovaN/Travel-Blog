@@ -1,0 +1,95 @@
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { server } from "../bff/server";
+import { useState } from "react";
+import { Input, Button } from "../components";
+import { Link } from "react-router-dom";
+
+const authFromSchema = yup.object().shape({
+	login: yup
+		.string()
+		.required("Заполните логин")
+		.matches(/^\w+$/, "Неверный логин. Допускаются только буквы и цифры")
+		.min(3, "Не верный логин. Минимум 3 символа.")
+		.max(15, "Не верный логин. Максимум 15 символов"),
+	password: yup
+		.string()
+		.required("Заполните пароль")
+		.matches(
+			/^[\w#%]+$/,
+			"Неверно заполнен пароль, допускаются буквыб цифры и знаки № %",
+		)
+		.min(6, "Не верный пароль. Минимум 6 символа.")
+		.max(30, "Не верный пароль. Максимум 30 символов"),
+});
+
+export const AuthorizationContainer = ({ className }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		defaultValues: {
+			login: "",
+			password: "",
+		},
+		resolver: yupResolver(authFromSchema),
+	});
+
+	const [serverError, setServerError] = useState(null);
+
+	const onSubmit = ({ login, password }) => {
+		server.authorize(login, password).then(({ res, error }) => {
+			if (error) {
+				setServerError(error);
+			}
+		});
+	};
+
+	const formError = errors?.login?.message || errors?.password?.message;
+
+	const errorMessage = formError || serverError;
+
+	return (
+		<div className={className}>
+			<h2>Авторизация</h2>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Input
+					type="text"
+					placeholder="Логин"
+					{...register("login", { onChange: () => setServerError(null) })}
+				/>
+				<Input
+					type="password"
+					placeholder="Пароль"
+					{...register("password", { onChange: () => setServerError(null) })}
+				/>
+				<Button type="submit" disabled={!!formError}>
+					Войти
+				</Button>
+
+				<Link to="/register">Регистрация</Link>
+				{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+			</form>
+		</div>
+	);
+};
+export const Authorization = styled(AuthorizationContainer)`
+	margin-top: 25px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	& > form {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		width: 260px;
+	}
+`;
+
+export const ErrorMessage = styled.div`
+	color: red;
+`;
