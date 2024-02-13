@@ -2,16 +2,37 @@ import styled from "styled-components";
 import { Icon } from "../../../icon/Icon";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../button/Button";
+import { ROLE } from "../../../../constants/roleId";
+import {
+	selectUserRole,
+	selectUserLogin,
+	selectUserSession,
+} from "../../../../selectors/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../../actions/logout";
 
 export const ControlPanelContainer = ({ className }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const roleId = useSelector(selectUserRole);
+	const login = useSelector(selectUserLogin);
+	const session = useSelector(selectUserSession);
 
 	return (
 		<div className={className}>
 			<RightAlign>
-				<Button>
-					<Link to="/login">Войти</Link>
-				</Button>
+				{roleId === ROLE.GUEST ? (
+					<Button>
+						<Link to="/login">Войти</Link>{" "}
+					</Button>
+				) : (
+					<>
+						<div>{login}</div>
+						<div onClick={() => dispatch(logout(session))}>
+							<Icon iconId="fa-sign-out" margin="0 0 0 20px"></Icon>
+						</div>
+					</>
+				)}
 			</RightAlign>
 			<RightAlign>
 				<div onClick={() => navigate(-1)}>

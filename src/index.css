@@ -32,14 +32,3 @@ div,
 input {
 	box-sizing: border-box;
 }
-
-.ff {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 18px;
-	width: 100px;
-	height: 32px;
-	border: 1px solid rgb(0, 0, 0);
-	background-color: #426ac2;
-}
