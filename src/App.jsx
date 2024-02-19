@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
 import styled from "styled-components";
-import { Authorization } from "./pages";
+import { Authorization, Registration, Users } from "./pages";
 
-const Content = styled.div`
+const Page = styled.div`
 	text-align: center;
 `;
 
@@ -25,17 +25,17 @@ export const App = () => {
 	return (
 		<AppWrapper>
 			<Header>Header</Header>
-			<Content>
+			<Page>
 				<Routes>
 					<Route path="/" element={<div>Главная страница</div>} />
 					<Route path="/login" element={<Authorization />} />
-					<Route path="/register" element={<div>Регистрация</div>} />
-					<Route path="/users" element={<div>Пользователи</div>} />
+					<Route path="/register" element={<Registration />} />
+					<Route path="/users" element={<Users />} />
 					<Route path="/post" element={<div>Новая статья</div>} />
 					<Route path="/post/postId" element={<div>Статья</div>} />
 					<Route path="/*" element={<div>Ошибка</div>} />
 				</Routes>
-			</Content>
+			</Page>
 			<Footer>Footer</Footer>
 		</AppWrapper>
 	);

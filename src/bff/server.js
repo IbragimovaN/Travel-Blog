@@ -1,10 +1,17 @@
-import { getUser } from "./get-user";
-import { addUser } from "./add-user";
+import {
+	getUser,
+	addUser,
+	getRoles,
+	getUsers,
+	setUserRole,
+	deleteUser,
+} from "./api";
 import { sessions } from "./sessions";
+import { ROLE } from "../constants/roleId";
 
 export const server = {
-	async logout(session) {
-		sessions.remove(session);
+	async logout(userSession) {
+		sessions.remove(userSession);
 	},
 
 	async authorize(authLogin, authPassword) {
@@ -17,13 +24,38 @@ export const server = {
 				res: null,
 			};
 		}
-		if (authPassword !== user.password) {
+
+		const { id, login, password, roleId } = user;
+		if (authPassword !== password) {
 			return {
 				error: "Неверный пароль",
 				res: null,
 			};
 		}
-		console.log(user.login);
+
+		return {
+			error: null,
+			res: {
+				login: login,
+				id: id,
+				roleId: roleId,
+				session: sessions.create(user),
+			},
+		};
+	},
+
+	async register(regLogin, regPassword) {
+		const existedUuser = await getUser(regLogin);
+
+		if (existedUuser) {
+			return {
+				error: "Этот логин уже занят",
+				res: null,
+			};
+		}
+
+		const user = await addUser(regLogin, regPassword);
+
 		return {
 			error: null,
 			res: {
@@ -35,26 +67,70 @@ export const server = {
 		};
 	},
 
-	async register(regLogin, regPassword) {
-		const user = getUser(regLogin);
+	async fetchRoles(userSession) {
+		const accessRoles = [ROLE.ADMIN];
 
-		if (user) {
+		if (!sessions.access(userSession, accessRoles)) {
 			return {
-				error: "Этот логин уже занят",
+				error: "Доступ запрещен",
 				res: null,
 			};
 		}
 
-		await addUser(regLogin, regPassword);
+		const roles = await getRoles();
 
 		return {
 			error: null,
-			res: {
-				login: user.login,
-				id: user.id,
-				roleId: user.role_id,
-				session: sessions.create(user),
-			},
+			res: roles,
+		};
+	},
+
+	async fetchUsers(userSession) {
+		const accessRoles = [ROLE.ADMIN];
+		if (!sessions.access(userSession, accessRoles)) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		const users = await getUsers();
+
+		return {
+			error: null,
+			res: users,
+		};
+	},
+	async updateUserRole(userSession, userId, newUserRoleId) {
+		const accessRoles = [ROLE.ADMIN];
+		if (!sessions.access(userSession, accessRoles)) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		setUserRole(userId, newUserRoleId);
+
+		return {
+			error: null,
+			res: true,
+		};
+	},
+	async removeUser(userSession, userId) {
+		const accessRoles = [ROLE.ADMIN];
+		if (!sessions.access(userSession, accessRoles)) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		deleteUser(userId);
+
+		return {
+			error: null,
+			res: true,
 		};
 	},
 };

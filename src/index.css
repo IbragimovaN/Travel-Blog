@@ -32,3 +32,11 @@ div,
 input {
 	box-sizing: border-box;
 }
+
+.ff {
+	display: flex;
+	justify-content: space-between;
+
+	display: grid;
+	grid-template: 1fr/ 217px 290px 223px;
+}

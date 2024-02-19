@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "../../../icon/Icon";
+import { IconWhite } from "../../../icon/Icon";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../button/Button";
 import { ROLE } from "../../../../constants/roleId";
@@ -29,20 +29,20 @@ export const ControlPanelContainer = ({ className }) => {
 					<>
 						<div>{login}</div>
 						<div onClick={() => dispatch(logout(session))}>
-							<Icon iconId="fa-sign-out" margin="0 0 0 20px"></Icon>
+							<IconWhite iconId="fa-sign-out" margin="0 0 0 20px"></IconWhite>
 						</div>
 					</>
 				)}
 			</RightAlign>
 			<RightAlign>
 				<div onClick={() => navigate(-1)}>
-					<Icon iconId="fa-backward" margin="10px 0 0 10px"></Icon>
+					<IconWhite iconId="fa-backward" margin="10px 0 0 10px"></IconWhite>
 				</div>
 				<Link to="/post">
-					<Icon iconId="fa-file-text-o" margin="10px 0 0 16px"></Icon>
+					<IconWhite iconId="fa-file-text-o" margin="10px 0 0 16px"></IconWhite>
 				</Link>
 				<Link to="/users">
-					<Icon iconId="fa-users" margin="10px 0 0 16px"></Icon>
+					<IconWhite iconId="fa-users" margin="10px 0 0 16px"></IconWhite>
 				</Link>
 			</RightAlign>
 		</div>
