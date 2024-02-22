@@ -1,12 +1,36 @@
 import styled from "styled-components";
 import { Icon } from "../../../../components";
+import { useServer } from "../../../../hooks";
+import { useDispatch } from "react-redux";
+import { closeModal, deleteCommentAsync, openModal } from "../../../../actions";
 
 export const CommentContainer = ({
 	className,
 	content,
 	publishedAt,
 	author,
+	id,
+	postId,
 }) => {
+	const requestServerFun = useServer();
+	const dispatch = useDispatch();
+
+	const onCommentDelete = (id) => {
+		console.log("delete click");
+		dispatch(
+			openModal({
+				text: "Удалить комментарий?",
+				onConfirm: () => {
+					dispatch(deleteCommentAsync(requestServerFun, postId, id));
+					dispatch(closeModal);
+				},
+				onCancel: () => {
+					dispatch(closeModal);
+				},
+			}),
+		);
+	};
+
 	return (
 		<div className={className}>
 			<div className="commentWrapper">
@@ -14,7 +38,7 @@ export const CommentContainer = ({
 					<div className="author">
 						<Icon
 							iconId="fa-user-circle-o"
-							margin="0 10px 0 0"
+							margin="0 10px 0 10px"
 							size="18px"
 						></Icon>
 						<div>{author}</div>
@@ -30,7 +54,7 @@ export const CommentContainer = ({
 				</div>
 				<div>{content}</div>
 			</div>
-			<div className="deleteIcon">
+			<div className="deleteIcon" onClick={() => onCommentDelete(id)}>
 				<Icon iconId="fa-trash-o" margin="0 10px 0 0" size="18px"></Icon>
 			</div>
 		</div>

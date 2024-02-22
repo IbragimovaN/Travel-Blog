@@ -48,6 +48,7 @@ export const CommentsContainer = ({ className, comments, postId }) => {
 						author={author}
 						content={content}
 						publishedAt={publishedAt}
+						postId={postId}
 					/>
 				))}
 			</div>

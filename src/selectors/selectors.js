@@ -3,3 +3,7 @@ export const selectUserLogin = ({ user }) => user.login;
 export const selectUserId = ({ user }) => user.id;
 export const selectUserSession = ({ user }) => user.session;
 export const selectPost = ({ post }) => post;
+export const selectModalText = ({ app }) => app.modal.text;
+export const selectModalOnConfirm = ({ app }) => app.modal.onConfirm;
+export const selectModalOnCancel = ({ app }) => app.modal.onCancel;
+export const selectModalIsOpen = ({ app }) => app.modal.isOpen;

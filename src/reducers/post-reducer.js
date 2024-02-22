@@ -6,7 +6,7 @@ const initialPostState = {
 	image_url: "",
 	content: "",
 	ablished_at: "",
-	comments: "",
+	comments: [],
 };
 
 export const postReducer = (state = initialPostState, action) => {
