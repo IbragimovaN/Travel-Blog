@@ -1,26 +1,27 @@
+import { getSession, addSession, deleteSession } from "./api";
+
 export const sessions = {
 	list: {},
 	create(user) {
 		const hash = Math.random().toFixed(50);
+		addSession(hash, user);
+
 		this.list[hash] = user;
 		return hash;
 	},
 
-	remove(hash) {
-		delete this.list[hash];
+	async remove(hash) {
+		const session = await getSession(hash);
+
+		if (!session) {
+			return;
+		}
+		deleteSession(session.id);
 	},
 
-	access(hash, accessRoles) {
-		const user = this.list[hash];
+	async access(hash, accessRoles) {
+		const dbSession = await getSession(hash);
 
-		if (!user) {
-			return false;
-		}
-
-		if (!accessRoles.includes(user.roleId)) {
-			return false;
-		}
-
-		return true;
+		return !!dbSession.user && accessRoles.includes(dbSession.user.roleId);
 	},
 };

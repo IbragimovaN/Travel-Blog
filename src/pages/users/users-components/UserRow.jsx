@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Icon } from "../../../components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useServer } from "../../../hooks";
 
 export const UserRowContainer = ({

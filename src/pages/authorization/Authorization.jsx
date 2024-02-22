@@ -2,15 +2,15 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { server } from "../bff/server";
+import { server } from "../../bff/server";
 import { useState } from "react";
-import { Input, Button } from "../components";
+import { Input, Button } from "../../components";
 import { Link, Navigate } from "react-router-dom";
-import { setUser } from "../actions";
+import { setUser } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserRole } from "../selectors/selectors";
-import { ROLE } from "../constants/roleId";
-import { useResetForm } from "../hooks/use-reset-form";
+import { selectUserRole } from "../../selectors/selectors";
+import { ROLE } from "../../constants/roleId";
+import { useResetForm } from "../../hooks/use-reset-form";
 
 const authFromSchema = yup.object().shape({
 	login: yup
@@ -52,13 +52,13 @@ export const AuthorizationContainer = ({ className }) => {
 
 	const onSubmit = ({ login, password }) => {
 		server.authorize(login, password).then(({ res, error }) => {
-			console.log(res);
 			if (error) {
 				setServerError(error);
 				return;
 			}
 
 			dispatch(setUser(res));
+			sessionStorage.setItem("userData", JSON.stringify(res));
 		});
 	};
 

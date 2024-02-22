@@ -7,7 +7,6 @@ const CLOUDY_ICON =
 const SNOW_ICON = "https://cdn.icon-icons.com/icons2/412/PNG/96/Snow_41027.png";
 
 export const createWetherIcon = (weatherPhrase) => {
-	console.log(weatherPhrase);
 	if (weatherPhrase.includes("солн")) {
 		return SUN_ICON;
 	} else if (weatherPhrase.includes("дожд")) {

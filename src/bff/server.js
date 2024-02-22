@@ -5,18 +5,20 @@ import {
 	getUsers,
 	setUserRole,
 	deleteUser,
+	getPost,
+	addComment,
+	getComments,
 } from "./api";
 import { sessions } from "./sessions";
 import { ROLE } from "../constants/roleId";
 
 export const server = {
-	async logout(userSession) {
-		sessions.remove(userSession);
+	async logout(hash) {
+		sessions.remove(hash);
 	},
 
 	async authorize(authLogin, authPassword) {
 		const user = await getUser(authLogin);
-		console.log(user);
 
 		if (!user) {
 			return {
@@ -67,10 +69,10 @@ export const server = {
 		};
 	},
 
-	async fetchRoles(userSession) {
+	async fetchRoles(hash) {
 		const accessRoles = [ROLE.ADMIN];
 
-		if (!sessions.access(userSession, accessRoles)) {
+		if (!sessions.access(hash, accessRoles)) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -85,9 +87,9 @@ export const server = {
 		};
 	},
 
-	async fetchUsers(userSession) {
+	async fetchUsers(hash) {
 		const accessRoles = [ROLE.ADMIN];
-		if (!sessions.access(userSession, accessRoles)) {
+		if (!sessions.access(hash, accessRoles)) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -101,9 +103,9 @@ export const server = {
 			res: users,
 		};
 	},
-	async updateUserRole(userSession, userId, newUserRoleId) {
+	async updateUserRole(hash, userId, newUserRoleId) {
 		const accessRoles = [ROLE.ADMIN];
-		if (!sessions.access(userSession, accessRoles)) {
+		if (!sessions.access(hash, accessRoles)) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -117,9 +119,9 @@ export const server = {
 			res: true,
 		};
 	},
-	async removeUser(userSession, userId) {
+	async removeUser(hash, userId) {
 		const accessRoles = [ROLE.ADMIN];
-		if (!sessions.access(userSession, accessRoles)) {
+		if (!sessions.access(hash, accessRoles)) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -131,6 +133,52 @@ export const server = {
 		return {
 			error: null,
 			res: true,
+		};
+	},
+	async fetchPost(hash, postId) {
+		const post = await getPost(postId);
+		const comments = await getComments(postId);
+		const users = await getUsers();
+
+		const commentsWithAuthor = comments.map((comment) => {
+			const user = users.find(({ id }) => id === comment.authorId);
+
+			return {
+				...comment,
+				author: user?.login,
+			};
+		});
+
+		return {
+			error: null,
+			res: {
+				...post,
+				comments: commentsWithAuthor,
+			},
+		};
+	},
+	async addCommentToPost(hash, userId, postId, content) {
+		const accessRoles = [ROLE.ADMIN, ROLE.MODERATOR, ROLE.READER];
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		await addComment(userId, postId, content);
+
+		const post = await getPost(postId);
+		const comments = await getComments(postId);
+
+		return {
+			error: null,
+			res: {
+				...post,
+				comments,
+			},
 		};
 	},
 };
