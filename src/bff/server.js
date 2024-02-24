@@ -14,6 +14,7 @@ import {
 } from "./api";
 import { sessions } from "./sessions";
 import { ROLE } from "../constants/roleId";
+import { addPost } from "./api/add-post";
 
 export const server = {
 	async logout(hash) {
@@ -264,6 +265,24 @@ export const server = {
 		return {
 			error: null,
 			res: true,
+		};
+	},
+	async addNewPost(hash, postData) {
+		const accessRoles = [ROLE.ADMIN];
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		const post = await addPost(postData);
+
+		return {
+			error: null,
+			res: post,
 		};
 	},
 };
