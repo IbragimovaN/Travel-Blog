@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const IconContainer = ({ className, iconId }) => {
+export const IconContainer = ({ className, iconId, onClick }) => {
 	return (
-		<div className={className}>
+		<div className={className} onClick={onClick}>
 			<i className={`fa ${iconId}`} aria-hidden="true"></i>
 		</div>
 	);

@@ -54,9 +54,14 @@ export const CommentContainer = ({
 				</div>
 				<div>{content}</div>
 			</div>
-			<div className="deleteIcon" onClick={() => onCommentDelete(id)}>
-				<Icon iconId="fa-trash-o" margin="0 10px 0 0" size="18px"></Icon>
-			</div>
+
+			<Icon
+				className="deleteIcon"
+				onClick={() => onCommentDelete(id)}
+				iconId="fa-trash-o"
+				margin="0 10px 0 0"
+				size="18px"
+			></Icon>
 		</div>
 	);
 };

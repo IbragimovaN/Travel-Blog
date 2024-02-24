@@ -40,9 +40,12 @@ export const ControlPanelContainer = ({ className }) => {
 				)}
 			</RightAlign>
 			<RightAlign>
-				<div onClick={() => navigate(-1)}>
-					<IconWhite iconId="fa-backward" margin="10px 0 0 10px"></IconWhite>
-				</div>
+				<IconWhite
+					iconId="fa-backward"
+					margin="10px 0 0 10px"
+					onClick={() => navigate(-1)}
+				></IconWhite>
+
 				<Link to="/post">
 					<IconWhite iconId="fa-file-text-o" margin="10px 0 0 16px"></IconWhite>
 				</Link>

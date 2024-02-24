@@ -43,19 +43,17 @@ export const UserRowContainer = ({
 							</option>
 						))}
 					</select>
-					<div onClick={() => onRoleSave(id, selectedRoleId)}>
-						<Icon
-							iconId="fa-floppy-o"
-							margin="0 0 0 10px"
-							disabled={isSaveButtonDisabled}
-						/>
-					</div>
+
+					<Icon
+						iconId="fa-floppy-o"
+						margin="0 0 0 10px"
+						disabled={isSaveButtonDisabled}
+						onClick={() => onRoleSave(id, selectedRoleId)}
+					/>
 				</ChangeRoleWrapper>
 			</Cell>
 
-			<div onClick={onUserDelete}>
-				<Icon iconId="fa-trash-o" margin="0 0 0 10px" />
-			</div>
+			<Icon iconId="fa-trash-o" margin="0 0 0 10px" onClick={onUserDelete} />
 		</div>
 	);
 };

@@ -28,17 +28,15 @@ export const CommentsContainer = ({ className, comments, postId }) => {
 					placeholder="Комментарий..."
 					onChange={({ target }) => setNewComment(target.value)}
 				></textarea>
-				<div
+
+				<Icon
+					iconId="fa-paper-plane-o"
+					margin="0 10px 0 0"
+					size="21px"
 					onClick={() => {
 						onNewCommentAdd(userId, postId, newComment);
 					}}
-				>
-					<Icon
-						iconId="fa-paper-plane-o"
-						margin="0 10px 0 0"
-						size="21px"
-					></Icon>
-				</div>
+				></Icon>
 			</div>
 			<div className="comments">
 				{comments.map(({ id, author, content, publishedAt }) => (
