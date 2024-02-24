@@ -10,6 +10,7 @@ import {
 	getComments,
 	deleteComment,
 	updatePost,
+	deletePost,
 } from "./api";
 import { sessions } from "./sessions";
 import { ROLE } from "../constants/roleId";
@@ -74,7 +75,9 @@ export const server = {
 	async fetchRoles(hash) {
 		const accessRoles = [ROLE.ADMIN];
 
-		if (!sessions.access(hash, accessRoles)) {
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -91,7 +94,9 @@ export const server = {
 
 	async fetchUsers(hash) {
 		const accessRoles = [ROLE.ADMIN];
-		if (!sessions.access(hash, accessRoles)) {
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -107,7 +112,9 @@ export const server = {
 	},
 	async updateUserRole(hash, userId, newUserRoleId) {
 		const accessRoles = [ROLE.ADMIN];
-		if (!sessions.access(hash, accessRoles)) {
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -195,7 +202,9 @@ export const server = {
 	},
 	async removeComment(hash, postId, id) {
 		const accessRoles = [ROLE.ADMIN, ROLE.MODERATOR];
-		if (!sessions.access(hash, accessRoles)) {
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -231,6 +240,30 @@ export const server = {
 		return {
 			error: null,
 			res: updatedPost,
+		};
+	},
+	async removePost(hash, id) {
+		const accessRoles = [ROLE.ADMIN, ROLE.MODERATOR];
+		const access = await sessions.access(hash, accessRoles);
+
+		if (!access) {
+			return {
+				error: "Доступ запрещен",
+				res: null,
+			};
+		}
+
+		await deletePost(id);
+
+		const comments = await getComments(id);
+
+		await Promise.all(
+			comments.map(({ id: commentId }) => deleteComment(commentId)),
+		);
+
+		return {
+			error: null,
+			res: true,
 		};
 	},
 };

@@ -1,10 +1,36 @@
 import styled from "styled-components";
 import { Icon } from "../../../../components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../../../actions";
+import { useServer } from "../../../../hooks";
+import { closeModal } from "../../../../actions";
+import { deletePostAsync } from "../../../../actions/delete-post-async";
 
 export const PostContentContainer = ({ className, post }) => {
 	const { id, title, imgUrl, content, publishedAt } = post;
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const requestServerFun = useServer();
+
+	const onPostDelete = (id) => {
+		console.log("delete click");
+		dispatch(
+			openModal({
+				text: "Удалить статью?",
+				onConfirm: () => {
+					dispatch(deletePostAsync(requestServerFun, id)).then(() => {
+						navigate("/");
+					});
+					dispatch(closeModal);
+				},
+				onCancel: () => {
+					dispatch(closeModal);
+				},
+			}),
+		);
+	};
+
 	return (
 		<div className={className}>
 			<img src={imgUrl} alt="img"></img>
@@ -21,7 +47,12 @@ export const PostContentContainer = ({ className, post }) => {
 						size="21px"
 						onClick={() => navigate(`/posts/${id}/edit`)}
 					></Icon>
-					<Icon iconId="fa-trash-o" margin="0 10px 0 0" size="21px"></Icon>
+					<Icon
+						iconId="fa-trash-o"
+						margin="0 10px 0 0"
+						size="21px"
+						onClick={() => onPostDelete(id)}
+					></Icon>
 				</div>
 			</div>
 

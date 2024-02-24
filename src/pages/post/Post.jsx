@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { PostContent, Comments, PostForm } from "./post-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { loadPost } from "../../actions";
+import { useEffect, useLayoutEffect } from "react";
+import { RESET_POST_DATA, loadPost } from "../../actions";
 import { selectPost } from "../../selectors/selectors";
 import { useServer } from "../../hooks";
 import { useMatch } from "react-router-dom";
@@ -13,6 +13,10 @@ export const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
 	const requestServerFun = useServer();
 	const params = useParams();
+
+	useLayoutEffect(() => {
+		dispatch(RESET_POST_DATA);
+	}, [dispatch]);
 
 	const isEditing = useMatch("/posts/:id/edit");
 
