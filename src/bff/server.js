@@ -11,10 +11,12 @@ import {
 	deleteComment,
 	updatePost,
 	deletePost,
+	getPosts,
 } from "./api";
 import { sessions } from "./sessions";
 import { ROLE } from "../constants/roleId";
 import { addPost } from "./api/add-post";
+import { getCommentsCount } from "./utills/get-comments-count";
 
 export const server = {
 	async logout(hash) {
@@ -283,6 +285,17 @@ export const server = {
 		return {
 			error: null,
 			res: post,
+		};
+	},
+	async fetchPosts() {
+		const [posts, comments] = await Promise.all([getPosts(), getComments()]);
+
+		return {
+			error: null,
+			res: posts.map((post) => ({
+				...post,
+				commentsCount: getCommentsCount(comments, post.id),
+			})),
 		};
 	},
 };

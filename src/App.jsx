@@ -1,7 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer, Modal } from "./components";
 import styled from "styled-components";
-import { Authorization, Registration, Users, Post, PostNew } from "./pages";
+import {
+	Authorization,
+	Registration,
+	Users,
+	Post,
+	PostNew,
+	Main,
+} from "./pages";
 import { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "./actions";
@@ -46,7 +53,7 @@ export const App = () => {
 			<Header>Header</Header>
 			<Page>
 				<Routes>
-					<Route path="/" element={<div>Главная страница</div>} />
+					<Route path="/" element={<Main />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/users" element={<Users />} />
