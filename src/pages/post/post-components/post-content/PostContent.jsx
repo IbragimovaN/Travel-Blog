@@ -14,7 +14,6 @@ export const PostContentContainer = ({ className, post }) => {
 	const requestServerFun = useServer();
 
 	const onPostDelete = (id) => {
-		console.log("delete click");
 		dispatch(
 			openModal({
 				text: "Удалить статью?",

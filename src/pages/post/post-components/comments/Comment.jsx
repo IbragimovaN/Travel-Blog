@@ -16,7 +16,6 @@ export const CommentContainer = ({
 	const dispatch = useDispatch();
 
 	const onCommentDelete = (id) => {
-		console.log("delete click");
 		dispatch(
 			openModal({
 				text: "Удалить комментарий?",

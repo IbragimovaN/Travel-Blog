@@ -15,9 +15,9 @@ export const useServer = () => {
 				"fetchPosts",
 			].includes(operation)
 				? params
-				: [...params];
+				: [session, ...params];
 
-			return server[operation](session, ...request);
+			return server[operation](...request);
 		},
 		[session],
 	);

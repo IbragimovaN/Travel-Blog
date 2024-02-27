@@ -28,20 +28,20 @@ export const FooterContainer = ({ className }) => {
 			<Info>
 				Авторский блог Артема Петрова
 				<Social>
-					<a href="#">
+					<a href="/">
 						<ImgSocialIcon src={TELEGRAM_ICON}></ImgSocialIcon>
 					</a>
-					<a href="#">
+					<a href="/">
 						<ImgSocialIcon src={INSTA_ICON}></ImgSocialIcon>
 					</a>
-					<a href="#">
+					<a href="#/">
 						<ImgSocialIcon src={YOUTUBE_ICON}></ImgSocialIcon>
 					</a>
 				</Social>
 			</Info>
 			<WeatherWrapper>
-				{city}, {temperature} градусов <br /> {weather}
 				<ImgWeatherIcon src={weatherIcon} alt="weather-icon"></ImgWeatherIcon>
+				{city}, {temperature} градусов <br /> {weather}
 			</WeatherWrapper>
 		</footer>
 	);
@@ -62,6 +62,7 @@ export const Footer = styled(FooterContainer)`
 	color: #fff;
 	box-sizing: border-box;
 	padding: 0 20px;
+	align-items: center;
 `;
 
 const Info = styled.div`
@@ -90,5 +91,10 @@ const ImgWeatherIcon = styled.img`
 const WeatherWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
-	flex-direction: column;
+	flex-direction: row;
+	align-items: center;
+
+	& img {
+		margin-right: 5px;
+	}
 `;

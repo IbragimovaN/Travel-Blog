@@ -27,7 +27,7 @@ export const ControlPanelContainer = ({ className }) => {
 		<div className={className}>
 			<RightAlign>
 				{roleId === ROLE.GUEST ? (
-					<Button>
+					<Button background={"#426ac2"}>
 						<Link to="/login">Войти</Link>{" "}
 					</Button>
 				) : (

@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-export const ButtonContainer = ({ children, className, width, ...props }) => {
+export const ButtonContainer = ({
+	children,
+	className,
+	width,
+	background,
+	...props
+}) => {
 	return (
 		<button className={className} {...props}>
 			{children}
@@ -15,7 +21,8 @@ export const Button = styled(ButtonContainer)`
 	width: ${({ width = "100%" }) => width};
 	height: 32px;
 	border: 1px solid rgb(0, 0, 0);
-	background-color: #426ac2;
+	background-color: ${({ background }) => background};
+	// background-color: #426ac2;
 	&:hover {
 		cursor: pointer;
 	}
