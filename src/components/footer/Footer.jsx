@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { createWetherIcon } from "../utills/icon-weather";
-import TELEGRAM_ICON from "../../image/free-icon-telegram-2111646.png";
-import INSTA_ICON from "../../image/free-icon-instagram-2111463.png";
-import YOUTUBE_ICON from "../../image/free-icon-youtube-174883.png";
+import { Icon } from "../icon/Icon";
 
 export const FooterContainer = ({ className }) => {
 	const [city, setCity] = useState("");
@@ -25,24 +23,20 @@ export const FooterContainer = ({ className }) => {
 	}, []);
 	return (
 		<footer className={className}>
-			<Info>
+			<div className="info">
 				Авторский блог Артема Петрова
-				<Social>
-					<a href="/">
-						<ImgSocialIcon src={TELEGRAM_ICON}></ImgSocialIcon>
-					</a>
-					<a href="/">
-						<ImgSocialIcon src={INSTA_ICON}></ImgSocialIcon>
-					</a>
-					<a href="#/">
-						<ImgSocialIcon src={YOUTUBE_ICON}></ImgSocialIcon>
-					</a>
-				</Social>
-			</Info>
-			<WeatherWrapper>
-				<ImgWeatherIcon src={weatherIcon} alt="weather-icon"></ImgWeatherIcon>
-				{city}, {temperature} градусов <br /> {weather}
-			</WeatherWrapper>
+				<div className="social">
+					<Icon iconId="fa-telegram" margin="0 10px 0 0" size="18px"></Icon>
+					<Icon iconId="fa-youtube-play" margin="0 10px 0 0" size="18px"></Icon>
+					<Icon iconId="fa-instagram" margin="0 10px 0 0" size="18px"></Icon>
+				</div>
+			</div>
+			<div className="weatherWrapper">
+				<img className="weatherIcon" src={weatherIcon} alt="weather-icon"></img>
+				<div className="weather">
+					{city}, {temperature} градусов {weather}
+				</div>
+			</div>
 		</footer>
 	);
 };
@@ -55,7 +49,7 @@ export const Footer = styled(FooterContainer)`
 	position: fixed;
 	bottom: 0;
 	width: 1200px;
-	height: 80px;
+	height: 40px;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
@@ -63,38 +57,34 @@ export const Footer = styled(FooterContainer)`
 	box-sizing: border-box;
 	padding: 0 20px;
 	align-items: center;
-`;
+	font-size: 16px;
 
-const Info = styled.div`
-	height: 60px;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-`;
+	& .info {
+		display: flex;
+		align-items: center;
+	}
 
-const Social = styled.div`
-	width: 120px;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-`;
+	& .social {
+		display: flex;
+		align-items: center;
+		margin-left: 10px;
+	}
 
-const ImgSocialIcon = styled.img`
-	width: 28px;
-	height: 28px;
-`;
-const ImgWeatherIcon = styled.img`
-	width: 50px;
-	height: 40px;
-	backgroung-color: none;
-`;
-const WeatherWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-	align-items: center;
+	& i {
+		color: #fff;
+	}
+
+	& .weatherWrapper {
+		display: flex;
+		align-items: center;
+	}
 
 	& img {
-		margin-right: 5px;
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+	}
+
+	& .weather {
 	}
 `;

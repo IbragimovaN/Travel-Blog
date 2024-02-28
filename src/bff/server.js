@@ -288,9 +288,9 @@ export const server = {
 			res: post,
 		};
 	},
-	async fetchPosts(page, limit) {
+	async fetchPosts(searchPhrase, page, limit) {
 		const [{ posts, links }, comments] = await Promise.all([
-			getPosts(page, limit),
+			getPosts(searchPhrase, page, limit),
 			getComments(),
 		]);
 
