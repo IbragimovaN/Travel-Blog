@@ -4,35 +4,41 @@ import { useServer } from "../../hooks";
 import { useEffect, useState } from "react";
 import { Content } from "../../components/content/content";
 import { ROLE } from "../../constants/roleId";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../selectors/selectors";
 
 export const UsersContainer = ({ className }) => {
 	const [users, setUsers] = useState([]);
 	const [roles, setRoles] = useState([]);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [shouldUpdateUsersList, setSouldUpdateUsersList] = useState(false);
-
+	const userRole = useSelector(selectUserRole);
 	const requestServerFunc = useServer();
 
 	useEffect(() => {
-		requestServerFunc("fetchRoles").then(({ error, res }) => {
-			Promise.all([
-				requestServerFunc("fetchUsers"),
-				requestServerFunc("fetchRoles"),
-			]).then(([userRes, rolesRes]) => {
-				if (userRes.error || rolesRes.error) {
-					setErrorMessage(userRes.error || rolesRes.error);
-					return;
-				}
+		if (![ROLE.ADMIN].includes(userRole)) {
+			return;
+		}
+		Promise.all([
+			requestServerFunc("fetchUsers"),
+			requestServerFunc("fetchRoles"),
+		]).then(([userRes, rolesRes]) => {
+			if (userRes.error || rolesRes.error) {
+				setErrorMessage(userRes.error || rolesRes.error);
+				return;
+			}
 
-				setUsers(userRes.res);
-				setRoles(rolesRes.res);
-			});
+			setUsers(userRes.res);
+			setRoles(rolesRes.res);
 		});
 
 		// requestServerFunc("fetchUsers");
-	}, [requestServerFunc, shouldUpdateUsersList]);
+	}, [requestServerFunc, shouldUpdateUsersList, userRole]);
 
 	const onUserDelete = (userId) => {
+		if (![ROLE.ADMIN].includes(userRole)) {
+			return;
+		}
 		requestServerFunc("removeUser", userId).then(() => {
 			setSouldUpdateUsersList(!shouldUpdateUsersList);
 		});
@@ -40,7 +46,7 @@ export const UsersContainer = ({ className }) => {
 
 	return (
 		<div className={className}>
-			<Content errorMessage={errorMessage}>
+			<Content access={[ROLE.ADMIN]} serverError={errorMessage}>
 				<h2>Пользователи</h2>
 				<TableHeader>
 					<div>Логин</div>

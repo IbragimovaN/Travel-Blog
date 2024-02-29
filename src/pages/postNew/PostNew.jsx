@@ -6,6 +6,8 @@ import { addPostAsync } from "../../actions/add-post-async";
 import { useServer } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Content } from "../../components/content/content";
+import { ROLE } from "../../constants/roleId";
 
 export const PostNewContainer = ({ className }) => {
 	const [title, setTitle] = useState("");
@@ -31,32 +33,34 @@ export const PostNewContainer = ({ className }) => {
 
 	return (
 		<div className={className}>
-			<div className="special-panel">
-				<div className="publishedAt">
-					<Icon iconId="fa-calendar-o" margin="0 10px 0 0" size="21px"></Icon>
-					{publishedAt}
+			<Content access={[ROLE.ADMIN]}>
+				<div className="special-panel">
+					<div className="publishedAt">
+						<Icon iconId="fa-calendar-o" margin="0 10px 0 0" size="21px"></Icon>
+						{publishedAt}
+					</div>
+					<div className="buttons">
+						<Icon
+							iconId="fa-floppy-o"
+							margin="0 10px 0 0"
+							size="21px"
+							onClick={onSave}
+						></Icon>
+					</div>
 				</div>
-				<div className="buttons">
-					<Icon
-						iconId="fa-floppy-o"
-						margin="0 10px 0 0"
-						size="21px"
-						onClick={onSave}
-					></Icon>
-				</div>
-			</div>
-			<Input
-				placeholder="Изображение"
-				onChange={({ target }) => setImgUrl(target.value)}
-			/>
-			<Input
-				placeholder="Заголовок"
-				onChange={({ target }) => setTitle(target.value)}
-			/>
-			<textarea
-				placeholder="Текст"
-				onChange={({ target }) => setContent(target.value)}
-			/>
+				<Input
+					placeholder="Изображение"
+					onChange={({ target }) => setImgUrl(target.value)}
+				/>
+				<Input
+					placeholder="Заголовок"
+					onChange={({ target }) => setTitle(target.value)}
+				/>
+				<textarea
+					placeholder="Текст"
+					onChange={({ target }) => setContent(target.value)}
+				/>
+			</Content>
 		</div>
 	);
 };

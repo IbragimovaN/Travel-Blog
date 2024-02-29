@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Header, Footer, Modal } from "./components";
+import { Header, Footer, Modal, Error } from "./components";
 import styled from "styled-components";
 import {
 	Authorization,
@@ -62,7 +62,10 @@ export const App = () => {
 					<Route path="/post" element={<PostNew />} />
 					<Route path="/posts/:id/edit" element={<Post />} />
 
-					<Route path="/*" element={<div>Ошибка</div>} />
+					<Route
+						path="/*"
+						element={<Error error="Такая страница не существует" />}
+					/>
 				</Routes>
 			</Page>
 			<Footer>Footer</Footer>
