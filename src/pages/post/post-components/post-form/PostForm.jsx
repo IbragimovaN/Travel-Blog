@@ -31,8 +31,6 @@ export const PostFormContainer = ({ className, post }) => {
 				content: newContent,
 			}),
 		).then(() => navigate(`/posts/${id}`));
-
-		// navigate(`/posts/${id}`);
 	};
 
 	return (
@@ -45,6 +43,7 @@ export const PostFormContainer = ({ className, post }) => {
 					<Icon iconId="fa-calendar-o" margin="0 10px 0 0" size="21px"></Icon>
 					{publishedAt}
 				</div>
+
 				<div className="buttons">
 					<Icon
 						iconId="fa-floppy-o"

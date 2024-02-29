@@ -184,10 +184,13 @@ export const server = {
 		};
 	},
 	async addCommentToPost(hash, userId, postId, content) {
+		console.log(userId, postId, content);
 		const accessRoles = [ROLE.ADMIN, ROLE.MODERATOR, ROLE.READER];
 		const access = await sessions.access(hash, accessRoles);
+		console.log(access);
 
 		if (!access) {
+			console.log("доступ запрещен");
 			return {
 				error: "Доступ запрещен",
 				res: null,
@@ -231,13 +234,23 @@ export const server = {
 		await deleteComment(id);
 
 		const post = await getPost(postId);
+		const users = await getUsers();
 		const comments = await getComments(postId);
+
+		const commentsWithAuthor = await comments.map((comment) => {
+			const user = users.find(({ id }) => id === comment.authorId);
+
+			return {
+				...comment,
+				author: user?.login,
+			};
+		});
 
 		return {
 			error: null,
 			res: {
 				...post,
-				comments,
+				comments: commentsWithAuthor,
 			},
 		};
 	},

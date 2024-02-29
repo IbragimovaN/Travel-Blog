@@ -43,9 +43,9 @@ export const PostCard = styled(PostCardContainer)`
 	display: flex;
 	flex-direction: column;
 	border: 1px solid rgba(66, 106, 194);
-	width: 350px;
+	width: 360px;
 	height: 250px;
-	margin: 10px;
+	margin: 10px 0 10px 0;
 
 	& .card-info {
 		padding: 5px;

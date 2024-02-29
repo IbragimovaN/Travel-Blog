@@ -23,6 +23,8 @@ export const ControlPanelContainer = ({ className }) => {
 		sessionStorage.removeItem("userData");
 	};
 
+	const isAdmin = [ROLE.ADMIN].includes(roleId);
+
 	return (
 		<div className={className}>
 			<RightAlign>
@@ -46,12 +48,19 @@ export const ControlPanelContainer = ({ className }) => {
 					onClick={() => navigate(-1)}
 				></IconWhite>
 
-				<Link to="/post">
-					<IconWhite iconId="fa-file-text-o" margin="10px 0 0 16px"></IconWhite>
-				</Link>
-				<Link to="/users">
-					<IconWhite iconId="fa-users" margin="10px 0 0 16px"></IconWhite>
-				</Link>
+				{isAdmin && (
+					<>
+						<Link to="/post">
+							<IconWhite
+								iconId="fa-file-text-o"
+								margin="10px 0 0 16px"
+							></IconWhite>
+						</Link>
+						<Link to="/users">
+							<IconWhite iconId="fa-users" margin="10px 0 0 16px"></IconWhite>
+						</Link>
+					</>
+				)}
 			</RightAlign>
 		</div>
 	);

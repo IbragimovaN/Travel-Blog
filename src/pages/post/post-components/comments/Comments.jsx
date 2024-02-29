@@ -4,13 +4,15 @@ import { Comment } from "./Comment";
 import { Icon } from "../../../../components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserId } from "../../../../selectors/selectors";
+import { selectUserId, selectUserRole } from "../../../../selectors/selectors";
 import { useServer } from "../../../../hooks";
 import { addCommentAsync } from "../../../../actions/add-comment-async";
+import { ROLE } from "../../../../constants/roleId";
 
 export const CommentsContainer = ({ className, comments, postId }) => {
 	const [newComment, setNewComment] = useState("");
 	const userId = useSelector(selectUserId);
+	const userRole = useSelector(selectUserRole);
 	const dispatch = useDispatch();
 	const requestServerFunc = useServer();
 
@@ -18,26 +20,28 @@ export const CommentsContainer = ({ className, comments, postId }) => {
 		dispatch(addCommentAsync(requestServerFunc, userId, postId, content));
 		setNewComment("");
 	};
-
+	const isGuest = userRole === ROLE.GUEST;
 	return (
 		<div className={className}>
-			<div className="new-comment">
-				<textarea
-					name="comment"
-					value={newComment}
-					placeholder="Комментарий..."
-					onChange={({ target }) => setNewComment(target.value)}
-				></textarea>
+			{!isGuest && (
+				<div className="new-comment">
+					<textarea
+						name="comment"
+						value={newComment}
+						placeholder="Комментарий..."
+						onChange={({ target }) => setNewComment(target.value)}
+					></textarea>
 
-				<Icon
-					iconId="fa-paper-plane-o"
-					margin="0 10px 0 0"
-					size="21px"
-					onClick={() => {
-						onNewCommentAdd(userId, postId, newComment);
-					}}
-				></Icon>
-			</div>
+					<Icon
+						iconId="fa-paper-plane-o"
+						margin="0 10px 0 0"
+						size="21px"
+						onClick={() => {
+							onNewCommentAdd(userId, postId, newComment);
+						}}
+					></Icon>
+				</div>
+			)}
 			<div className="comments">
 				{comments.map(({ id, author, content, publishedAt }) => (
 					<Comment

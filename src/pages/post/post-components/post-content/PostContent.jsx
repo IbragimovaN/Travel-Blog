@@ -1,17 +1,20 @@
 import styled from "styled-components";
 import { Icon } from "../../../../components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../../actions";
 import { useServer } from "../../../../hooks";
 import { closeModal } from "../../../../actions";
 import { deletePostAsync } from "../../../../actions/delete-post-async";
+import { ROLE } from "../../../../constants/roleId";
+import { selectUserRole } from "../../../../selectors/selectors";
 
 export const PostContentContainer = ({ className, post }) => {
 	const { id, title, imgUrl, content, publishedAt } = post;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const requestServerFun = useServer();
+	const roleId = useSelector(selectUserRole);
 
 	const onPostDelete = (id) => {
 		dispatch(
@@ -29,6 +32,7 @@ export const PostContentContainer = ({ className, post }) => {
 			}),
 		);
 	};
+	const isAdmin = [ROLE.ADMIN].includes(roleId);
 
 	return (
 		<div className={className}>
@@ -39,20 +43,22 @@ export const PostContentContainer = ({ className, post }) => {
 					<Icon iconId="fa-calendar-o" margin="0 10px 0 0" size="21px"></Icon>
 					{publishedAt}
 				</div>
-				<div className="buttons">
-					<Icon
-						iconId="fa-pencil-square-o"
-						margin="0 10px 0 0"
-						size="21px"
-						onClick={() => navigate(`/posts/${id}/edit`)}
-					></Icon>
-					<Icon
-						iconId="fa-trash-o"
-						margin="0 10px 0 0"
-						size="21px"
-						onClick={() => onPostDelete(id)}
-					></Icon>
-				</div>
+				{isAdmin && (
+					<div className="buttons">
+						<Icon
+							iconId="fa-pencil-square-o"
+							margin="0 10px 0 0"
+							size="21px"
+							onClick={() => navigate(`/posts/${id}/edit`)}
+						></Icon>
+						<Icon
+							iconId="fa-trash-o"
+							margin="0 10px 0 0"
+							size="21px"
+							onClick={() => onPostDelete(id)}
+						></Icon>
+					</div>
+				)}
 			</div>
 
 			<div className="text">{content}</div>

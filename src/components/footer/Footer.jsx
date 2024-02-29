@@ -46,10 +46,10 @@ export const Footer = styled(FooterContainer)`
 	background: url("https://i.baraholka.com.ru/files/1/8/1862507_5.jpg");
 	background-size: 100%;
 	background-repeat: no-repeat;
-	position: fixed;
+	// position: fixed;
 	bottom: 0;
 	width: 1200px;
-	height: 40px;
+	height: 50px;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;

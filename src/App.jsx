@@ -15,11 +15,12 @@ import { setUser } from "./actions";
 
 const Page = styled.div`
 	text-align: center;
+	min-height: calc(100vh - 250px);
 `;
 
 const AppWrapper = styled.div`
 	positin: relative;
-	padding: 200px 0 80px 0;
+	padding: 200px 0 0px 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
