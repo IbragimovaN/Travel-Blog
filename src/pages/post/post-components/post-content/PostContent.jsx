@@ -8,6 +8,7 @@ import { closeModal } from "../../../../actions";
 import { deletePostAsync } from "../../../../actions/delete-post-async";
 import { ROLE } from "../../../../constants/roleId";
 import { selectUserRole } from "../../../../selectors/selectors";
+import { PROP_TYPE } from "../../../../constants/prop-type";
 
 export const PostContentContainer = ({ className, post }) => {
 	const { id, title, imgUrl, content, publishedAt } = post;
@@ -70,8 +71,8 @@ export const PostContent = styled(PostContentContainer)`
 	white-space: pre-line;
 
 	& img {
-		width: 200px;
-		height: 134px;
+		width: 400px;
+		height: 220px;
 		float: left;
 		margin: 0 20px 10px 0;
 	}
@@ -106,3 +107,6 @@ export const PostContent = styled(PostContentContainer)`
 		font-size: 18px;
 	}
 `;
+PostContent.propTypes = {
+	post: PROP_TYPE.POST,
+};

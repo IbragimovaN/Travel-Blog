@@ -18,7 +18,7 @@
       "login": "Masha",
       "password": "qwer2222",
       "registered_at": "2046-06-01 00:35",
-      "role_id": 2,
+      "role_id": 1,
       "id": "pydLmi-"
     },
     {
@@ -154,11 +154,18 @@
       "published_at": "2047-07-27 13:39",
       "content": "super!",
       "id": "mAJslkf"
+    },
+    {
+      "author_id": "n-W52C5",
+      "post_id": "002",
+      "published_at": "2047-05-01 02:23",
+      "content": "fgfgghh",
+      "id": "mpgaYMj"
     }
   ],
   "sessions": [
     {
-      "hash": "0.34492133215456632910900225397199392318725585937500",
+      "hash": "0.92054798109179047926886596542317420244216918945313",
       "user": {
         "id": "n-W52C5",
         "login": "Dasha",

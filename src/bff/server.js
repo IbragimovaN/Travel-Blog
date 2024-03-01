@@ -184,13 +184,10 @@ export const server = {
 		};
 	},
 	async addCommentToPost(hash, userId, postId, content) {
-		console.log(userId, postId, content);
 		const accessRoles = [ROLE.ADMIN, ROLE.MODERATOR, ROLE.READER];
 		const access = await sessions.access(hash, accessRoles);
-		console.log(access);
 
 		if (!access) {
-			console.log("доступ запрещен");
 			return {
 				error: "Доступ запрещен",
 				res: null,

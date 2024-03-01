@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { RESET_POST_DATA, loadPost } from "../../actions";
-import { selectPost, selectUserRole } from "../../selectors/selectors";
+import { selectPost } from "../../selectors/selectors";
 import { useServer } from "../../hooks";
 import { useMatch } from "react-router-dom";
 import { Error } from "../../components";
-import { ROLE } from "../../constants/roleId";
 
 export const PostContainer = ({ className }) => {
 	const post = useSelector(selectPost);

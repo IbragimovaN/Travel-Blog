@@ -1,3 +1,4 @@
+import PropTypes, { oneOfType } from "prop-types";
 import styled from "styled-components";
 
 const Div = styled.div`
@@ -15,4 +16,8 @@ export const Error = ({ error }) => {
 			</Div>
 		)
 	);
+};
+
+Error.propTypes = {
+	error: oneOfType([PropTypes.string, PropTypes.exact(null)]),
 };

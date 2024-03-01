@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Icon } from "../../../../components";
 import { useServer } from "../../../../hooks";
@@ -100,3 +101,11 @@ export const Comment = styled(CommentContainer)`
 		display: flex;
 	}
 `;
+
+Comment.propTypes = {
+	content: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	author: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	postId: PropTypes.string.isRequired,
+};

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 export const IconContainer = ({ className, iconId, onClick }) => {
 	return (
@@ -24,3 +25,7 @@ export const IconWhite = styled(IconContainer)`
 		cursor: ${({ onClick }) => (onClick ? "pointer" : "default")};
 	}
 `;
+Icon.propTypes = {
+	iconId: PropTypes.string.isRequired,
+	onClick: PropTypes.func,
+};

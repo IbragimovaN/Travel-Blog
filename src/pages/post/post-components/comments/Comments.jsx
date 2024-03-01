@@ -1,5 +1,5 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
-
 import { Comment } from "./Comment";
 import { Icon } from "../../../../components";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { selectUserId, selectUserRole } from "../../../../selectors/selectors";
 import { useServer } from "../../../../hooks";
 import { addCommentAsync } from "../../../../actions/add-comment-async";
 import { ROLE } from "../../../../constants/roleId";
+import { PROP_TYPE } from "../../../../constants/prop-type";
 
 export const CommentsContainer = ({ className, comments, postId }) => {
 	const [newComment, setNewComment] = useState("");
@@ -77,3 +78,8 @@ export const Comments = styled(CommentsContainer)`
 		border: 1px solid red;
 	}
 `;
+
+Comments.propTypes = {
+	comments: PropTypes.arrayOf(PROP_TYPE.COMMENT).isRequired,
+	postId: PropTypes.string.isRequired,
+};

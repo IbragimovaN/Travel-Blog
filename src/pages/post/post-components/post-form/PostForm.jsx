@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { savePostAsync } from "../../../../actions";
 import { useNavigate } from "react-router-dom";
 import { useServer } from "../../../../hooks";
+import { PROP_TYPE } from "../../../../constants/prop-type";
 
 export const PostFormContainer = ({ className, post }) => {
 	const { id, title, imgUrl, content, publishedAt } = post;
@@ -107,3 +108,7 @@ export const PostForm = styled(PostFormContainer)`
 		font-size: 18px;
 	}
 `;
+
+PostForm.propTypes = {
+	post: PROP_TYPE.POST.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Icon } from "../../../../components";
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ export const PostCardContainer = ({
 	return (
 		<div className={className}>
 			<Link to={`posts/${id}`}>
-				<img className="card-img" src={imgUrl} alt="image" />
+				<img className="card-img" src={imgUrl} alt="n" />
 				<div className="card-info">
 					<h3 className="title">{title}</h3>
 					<div className="card-footer">
@@ -76,3 +77,11 @@ export const PostCard = styled(PostCardContainer)`
 		flex-direction: row;
 	}
 `;
+
+PostCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	imgUrl: PropTypes.string.isRequired,
+	commentsCount: PropTypes.number.isRequired,
+};

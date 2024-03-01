@@ -1,7 +1,9 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Error } from "./content-components/Error";
 import { useSelector } from "react-redux";
 import { selectUserRole } from "../../selectors/selectors";
+import { PROP_TYPE } from "../../constants/prop-type";
 
 export const ContentContainer = ({
 	className,
@@ -25,3 +27,8 @@ export const Content = styled(ContentContainer)`
 	align-items: center;
 	justify-content: center;
 `;
+Content.propTypes = {
+	children: PropTypes.node.isRequired,
+	access: PropTypes.arrayOf(PROP_TYPE.ROLE_ID).isRequired,
+	serverError: PropTypes.oneOfType([PropTypes.string, PropTypes.exact(null)]),
+};
