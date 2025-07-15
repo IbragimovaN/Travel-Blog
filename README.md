@@ -33,5 +33,20 @@ Travel-Blog — это учебный проект блога путешеств
 - React Router (навигация)  
 - Styled Components (стилизация)  
 - React Hook Form + Yup (валидация форм)  
-- Адаптивная вёрстка  
+- Адаптивная вёрстка
+
+## Ручная установка
+
+### Backend:
+Понадобится файл .env в папке backend
+
+MONGODB_CONNECTION_STRING=your_mongodb_connection
+JWT_SECRET=your_strong_jwt_secret
+
+```bash
+cd backend
+npm install
+npm run serve
+
+
 
