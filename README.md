@@ -67,8 +67,8 @@ npm run dev
 
 ## Скриншоты интерфейса
 
-![Главная страница](https://github.com/user-attachments/assets/be5063f6-ddc8-44ef-9702-96c5a3676189)
+![Главная страница](travel-blog.png)
 
-![Страница поста](https://github.com/user-attachments/assets/5ffa6975-5b77-4140-b39c-c02e189fcef6)
+![Страница регистрации ](travel-blog2.png)
 
-![Админ-панель](https://github.com/user-attachments/assets/7ddca854-c970-47a1-80ea-2bdccfc0cf0b)
+![Страница поста](travel-blog3.png)
