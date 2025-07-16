@@ -67,8 +67,8 @@ npm run dev
 
 ## Скриншоты интерфейса
 
-![Главная страница](travel-blog.png)
+![Главная страница](travel-blog.PNG)
 
-![Страница регистрации ](travel-blog2.png)
+![Страница регистрации ](travel-blog2.PNG)
 
-![Страница поста](travel-blog3.png)
+![Страница поста](travel-blog3.PNG)
