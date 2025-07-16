@@ -44,7 +44,7 @@ JWT_SECRET=your_strong_jwt_secret
 
 ```bash
 docker build -t travel-blog .
-docker run -p 3004:3004 --env-file .env travel-blog
+docker run -p 3006:3004 -d travel-blog   
 ```
 
 ### Ручная установка
