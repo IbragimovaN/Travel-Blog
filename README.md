@@ -53,7 +53,11 @@ docker run -p 3006:3004 -d travel-blog
 
 ```bash
 cd backend
+```
+```bash
 npm install
+```
+```bash
 npm run serve
 ```
 
